@@ -41,7 +41,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 int counter  = 0;
-int counter1 = 0;
 int sec = 60, min =3600, hour =43200;
 /* USER CODE BEGIN PV */
 
@@ -131,42 +130,24 @@ void ex4()
 void setLedRed(int a)
 {
     HAL_GPIO_WritePin(LED_RED0_GPIO_Port, LED_RED0_Pin, a);
-    HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, a);
-//    HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, a);
-//    HAL_GPIO_WritePin(LED_RED3_GPIO_Port, LED_RED3_Pin, 1 - a);
-}
-
-void setLedRed1(int a)
-{
     HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, a);
+    HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, a);
     HAL_GPIO_WritePin(LED_RED3_GPIO_Port, LED_RED3_Pin, a);
 }
 
 void setLedYellow(int a)
 {
     HAL_GPIO_WritePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin, a);
-    HAL_GPIO_WritePin(LED_YEL2_GPIO_Port, LED_YEL2_Pin, a);
-//    HAL_GPIO_WritePin(LED_YEL2_GPIO_Port, LED_YEL2_Pin, a);
-//    HAL_GPIO_WritePin(LED_YEL3_GPIO_Port, LED_YEL3_Pin, a);
-}
-
-void setLedYellow1(int a)
-{
     HAL_GPIO_WritePin(LED_YEL1_GPIO_Port, LED_YEL1_Pin, a);
+    HAL_GPIO_WritePin(LED_YEL2_GPIO_Port, LED_YEL2_Pin, a);
     HAL_GPIO_WritePin(LED_YEL3_GPIO_Port, LED_YEL3_Pin, a);
 }
 
 void setLedGreen(int a)
 {
     HAL_GPIO_WritePin(LED_GRE0_GPIO_Port, LED_GRE0_Pin, a);
-    HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, a);
-//    HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, a);
-//    HAL_GPIO_WritePin(LED_GRE3_GPIO_Port, LED_GRE3_Pin, a);
-}
-
-void setLedGreen1(int a)
-{
     HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, a);
+    HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, a);
     HAL_GPIO_WritePin(LED_GRE3_GPIO_Port, LED_GRE3_Pin, a);
 }
 
@@ -200,35 +181,6 @@ void ex5()
 		}
 }
 
-void ex5_1()
-{
-	  switch (counter1) {
-	  case 0:
-		 setLedRed1(0);
-		 setLedYellow1(0);
-		 setLedGreen1(1);
-		 counter1++;;
-		 break;
-	  case 3:
-		 setLedRed1(0);
-		 setLedYellow1(1);
-		 setLedGreen1(0);
-		 counter1++;
-		 break;
-	  case 5:
-		 setLedRed1(1);
-		 setLedYellow1(0);
-		 setLedGreen1(0);
-		 counter1++;
-		 break;
-	  case 9:
-	    counter1 = 0;
-	    break;
-	  default:
-	    counter1++;
-	    break;
-		}
-}
 void ex6()
 {
 	// ODR: Output Data Register. It means that we operate on registers. The code is : GPIOA->ODR =  0x0008 (0b0000000000001000).
@@ -263,24 +215,23 @@ void clearNumberOnClock(int num){
 
 void ex10()
 {
-    sec ++;
-    min ++;
-    hour ++;
+    sec --;
+    min --;
+    hour --;
     clearAllClock();
 
     //display sec, min, hour every 5s,300s, and 3600s respectively.
-    setNumberOnClock(sec/5);
-    setNumberOnClock(min/300);
-    setNumberOnClock(hour/3600);
+    setNumberOnClock(11 - sec/5);
+    setNumberOnClock(11 - min/300);
+    setNumberOnClock(11 - hour/3600);
 
     //Return after every cycle
-    if (sec == 60)
-        sec = 0;
-    if (min == 3600)
-        min = 0;
-    if (hour == 43200)
-        hour = 0;
-
+    if (sec == 0)
+        sec = 60;
+    if (min == 0)
+        min = 3600;
+    if (hour == 0)
+        hour = 43200;
 }
 
 /* USER CODE END 0 */
@@ -319,15 +270,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //counter = 9;
-  //GPIOA->ODR = 0x0008;
-  clearAllClock();
-  sec = 0, min =0, hour =0;
-
+  //counter = 0;
+  GPIOA->ODR = 0x0008;
+  //clearAllClock();
+  //sec = 60, min =3600, hour =43200;
   while (1)
   {
     /* USER CODE END WHILE */
-	//display7SEG(counter);
+	display7SEG(8);
 //	setNumberOnClock(8);
 //	HAL_Delay(1000);
 //	clearNumberOnClock(8);
@@ -335,12 +285,10 @@ int main(void)
 //	setNumberOnClock(7);
 //	HAL_Delay(1000);
 //	clearAllClock();
-	 ex10();
-	// ex5_1();
-	 HAL_Delay(100);
-  }
+	 ex5();
+	 HAL_Delay(200);
     /* USER CODE BEGIN 3 */
-
+  }
   /* USER CODE END 3 */
 }
 

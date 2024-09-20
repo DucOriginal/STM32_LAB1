@@ -263,24 +263,23 @@ void clearNumberOnClock(int num){
 
 void ex10()
 {
-    sec ++;
-    min ++;
-    hour ++;
+    sec --;
+    min --;
+    hour --;
     clearAllClock();
 
     //display sec, min, hour every 5s,300s, and 3600s respectively.
-    setNumberOnClock(sec/5);
-    setNumberOnClock(min/300);
-    setNumberOnClock(hour/3600);
+    setNumberOnClock(11 - sec/5);
+    setNumberOnClock(11 - min/300);
+    setNumberOnClock(11 - hour/3600);
 
     //Return after every cycle
-    if (sec == 60)
-        sec = 0;
-    if (min == 3600)
-        min = 0;
-    if (hour == 43200)
-        hour = 0;
-
+    if (sec == 0)
+        sec = 60;
+    if (min == 0)
+        min = 3600;
+    if (hour == 0)
+        hour = 43200;
 }
 
 /* USER CODE END 0 */
@@ -319,15 +318,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //counter = 9;
+  counter = 9;
   //GPIOA->ODR = 0x0008;
-  clearAllClock();
-  sec = 0, min =0, hour =0;
+  //clearAllClock();
+  //sec = 60, min =3600, hour =43200;
 
   while (1)
   {
     /* USER CODE END WHILE */
-	//display7SEG(counter);
+	display7SEG(counter);
 //	setNumberOnClock(8);
 //	HAL_Delay(1000);
 //	clearNumberOnClock(8);
@@ -335,9 +334,9 @@ int main(void)
 //	setNumberOnClock(7);
 //	HAL_Delay(1000);
 //	clearAllClock();
-	 ex10();
-	// ex5_1();
-	 HAL_Delay(100);
+	 ex5();
+	 ex5_1();
+	 HAL_Delay(1000);
   }
     /* USER CODE BEGIN 3 */
 
