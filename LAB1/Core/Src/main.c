@@ -40,7 +40,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
+int counter  = 0;
+int sec = 60, min =3600, hour =43200;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -54,6 +55,184 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+//Segment numbers stored in array.
+//Each element represents for a displayed number (range from 0 - 9). Decoder for Common Anode.
+uint8_t segmentNumber[10] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+void display7SEG(int num){
+    uint8_t number = segmentNumber[num];
+	//Check a nth bit by shifting n times to the right, then bitwise AND it:
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, ((number>>0)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, ((number>>1)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, ((number>>2)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, ((number>>3)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, ((number>>4)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, ((number>>5)&0x01));
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, ((number>>6)&0x01));
+}
+
+void ex1()
+{
+	  switch(counter){
+	  case 0:
+	    HAL_GPIO_WritePin(LED_RED0_GPIO_Port, LED_RED0_Pin, SET);
+	    HAL_GPIO_WritePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin, RESET);
+	    counter ++;
+	    break;
+	  case 2:
+	    HAL_GPIO_WritePin(LED_RED0_GPIO_Port, LED_RED0_Pin, RESET);
+	    HAL_GPIO_WritePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin, SET);
+	    counter++;
+	    break;
+	  case 3:
+	    counter = 0;
+	    break;
+	  default:
+	    counter++;
+	    break;
+	    }
+}
+
+void ex2()
+{
+	  switch (counter) {
+	  case 0:
+	    HAL_GPIO_WritePin(LED_RED0_GPIO_Port, LED_RED0_Pin, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin, GPIO_PIN_RESET);
+	    HAL_GPIO_WritePin(LED_GRE0_GPIO_Port, LED_GRE0_Pin, GPIO_PIN_RESET);
+	    counter++;
+	    break;
+	  case 5:
+	    HAL_GPIO_TogglePin(LED_RED0_GPIO_Port, LED_RED0_Pin);
+	    HAL_GPIO_TogglePin(LED_GRE0_GPIO_Port, LED_GRE0_Pin);
+	    counter++;
+	    break;
+	  case 8:
+	    HAL_GPIO_TogglePin(LED_GRE0_GPIO_Port, LED_GRE0_Pin);
+	    HAL_GPIO_TogglePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin);
+	    counter++;
+	    break;
+	  case 9:
+	    counter = 0;
+	    break;
+	  default:
+	    counter++;
+	    break;
+		}
+}
+
+void ex4()
+{
+    if(counter >= 10) counter = 0;
+    display7SEG(counter++);
+}
+
+void setLedRed(int a)
+{
+    HAL_GPIO_WritePin(LED_RED0_GPIO_Port, LED_RED0_Pin, a);
+    HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, a);
+    HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, a);
+    HAL_GPIO_WritePin(LED_RED3_GPIO_Port, LED_RED3_Pin, a);
+}
+
+void setLedYellow(int a)
+{
+    HAL_GPIO_WritePin(LED_YEL0_GPIO_Port, LED_YEL0_Pin, a);
+    HAL_GPIO_WritePin(LED_YEL1_GPIO_Port, LED_YEL1_Pin, a);
+    HAL_GPIO_WritePin(LED_YEL2_GPIO_Port, LED_YEL2_Pin, a);
+    HAL_GPIO_WritePin(LED_YEL3_GPIO_Port, LED_YEL3_Pin, a);
+}
+
+void setLedGreen(int a)
+{
+    HAL_GPIO_WritePin(LED_GRE0_GPIO_Port, LED_GRE0_Pin, a);
+    HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, a);
+    HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, a);
+    HAL_GPIO_WritePin(LED_GRE3_GPIO_Port, LED_GRE3_Pin, a);
+}
+
+void ex5()
+{
+	  switch (counter) {
+	  case 9:
+		 setLedRed(1);
+		 setLedYellow(0);
+		 setLedGreen(0);
+		 counter--;
+		 break;
+	  case 4:
+		 setLedRed(0);
+		 setLedYellow(0);
+		 setLedGreen(1);
+		 counter--;
+		 break;
+	  case 1:
+		 setLedRed(0);
+		 setLedYellow(1);
+		 setLedGreen(0);
+		 counter--;
+		 break;
+	  case 0:
+	    counter = 9;
+	    break;
+	  default:
+	    counter--;
+	    break;
+		}
+}
+
+void ex6()
+{
+	// ODR: Output Data Register. It means that we operate on registers. The code is : GPIOA->ODR =  0x0008 (0b0000000000001000).
+	// We want to set pin A3 and reset the other pins in the 16 pin bus.
+	// Aim: Check connection between pins by blinking 12 LEDs in sequence. Then repeat a loop.
+	//We configure pins from A4 through A15, so as to see A4 to be displayed we set A3 in default.
+	  if(counter >=0 && counter <= 11)
+	    GPIOA->ODR = GPIOA->ODR << 1; // Shift the register to the left 1 bit
+	  if(counter >= 12){   // After a loop, set up again.
+	    GPIOA->ODR = 0x0010;//0b0000000000010000;
+	    counter  = 0;
+		  }
+	  counter++;
+}
+
+void clearAllClock(){
+    GPIOA -> ODR = 0x0000;
+}
+
+void setNumberOnClock(int num){
+  if(num >= 0 && num <=11){
+    GPIOA->ODR |= 1 << (num + 4); // Because pin A_4 has value 0.
+  }
+}
+
+void clearNumberOnClock(int num){
+	if(num >= 0 && num <=11){
+	 // To clear a bit, we must invert the bit string with bitwise NOT operator(~), then AND it.
+	  GPIOA->ODR &= ~(1 << (num + 4));
+	}
+}
+
+void ex10()
+{
+    sec --;
+    min --;
+    hour --;
+    clearAllClock();
+
+    //display sec, min, hour every 5s,300s, and 3600s respectively.
+    setNumberOnClock(11 - sec/5);
+    setNumberOnClock(11 - min/300);
+    setNumberOnClock(11 - hour/3600);
+
+    //Return after every cycle
+    if (sec == 0)
+        sec = 60;
+    if (min == 0)
+        min = 3600;
+    if (hour == 0)
+        hour = 43200;
+}
 
 /* USER CODE END 0 */
 
@@ -91,10 +270,23 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  //counter = 0;
+  GPIOA->ODR = 0x0008;
+  //clearAllClock();
+  //sec = 60, min =3600, hour =43200;
   while (1)
   {
     /* USER CODE END WHILE */
-
+	//display7SEG(8);
+//	setNumberOnClock(8);
+//	HAL_Delay(1000);
+//	clearNumberOnClock(8);
+//	HAL_Delay(1000);
+//	setNumberOnClock(7);
+//	HAL_Delay(1000);
+//	clearAllClock();
+	 ex10();;
+	 HAL_Delay(200);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

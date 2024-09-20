@@ -16,3 +16,6 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.cdt.core 1 0 2024-09-20 13:27:24.406
 !MESSAGE Indexed 'LAB1' (19 sources, 78 headers) in 3.12 sec: 3,647 declarations; 13,136 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.012%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-09-20 14:51:41.057
+!MESSAGE Indexed 'lab1_nucleo' (19 sources, 78 headers) in 2.93 sec: 3,658 declarations; 13,250 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.012%)
