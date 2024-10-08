@@ -441,12 +441,54 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+//	    second++;
+//	    if (second >= 60){
+//	        second = 0;
+//	        minute++;
+//	    }
+//	    if(minute >= 60){
+//	        minute = 0;
+//	        hour++;
+//	    }
+//	    if(hour >=24){
+//	        hour = 0;
+//	    }
+//	    updateClockBuffer();
+//	    HAL_Delay(1000);
 
-//	  ex5_6_7_8();
+	  ex5_6_7_8();
 //	  ex9();
 //	  HAL_Delay(1);
 //	  ex10();
+//	    for (int row = 0; row < MAX_LED_MATRIX; row++) {
+//	        setRow(row);                     // Select the current row
+//	        setColumns(matrix_buffer[row]);  // Output the corresponding column data
+//	        HAL_Delay(1);                    // Small delay for persistence of vision
+//	    }
+//
+//	  ex9();
+//      updateLEDMatrix(index);   // Update the matrix with the current index
+//
+//      index++;  // Move to the next row
+//
+//      if (index >= MAX_LED_MATRIX) {
+//          index = 0;  // Reset index to 0 after all rows are displayed
+//      }
 
+      //   Perform shift left animation every 100ms (adjust timing as needed)
+//        if (HAL_GetTick() - lastShiftTime >= 100) {
+//            shiftLeft();  // Shift the columns left
+//            lastShiftTime = HAL_GetTick(); // Update the last shift time
+//        }
+
+//        HAL_Delay(1);  // Small delay to allow for persistence of vision
+//	  displayLetterA();
+//	  if (timer1_flag == 1){
+//		  setTimer1(1);
+//		  updateLEDMatrix(index_matrix);
+//		  if (index_matrix == 7) index_matrix =0;
+//		  else index_matrix ++;
+//	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
