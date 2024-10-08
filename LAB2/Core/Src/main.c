@@ -229,7 +229,7 @@ void ex5_6_7_8()
 		if(index_led >= 4)
 			index_led = 0;
 		update7SEG(index_led++);
-		setTimer2(50);//every 0.5s will move to next LEDs.
+		setTimer2(25);//every 0.5s will move to next LEDs.
 	}
 
 	if(timer3_flag == 1)
@@ -433,8 +433,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   setTimer1(100); //timer for updating time
-  setTimer2(110); //timer for 7 SEGMENTS
-  setTimer3(112); //timer for LEDs
+  setTimer2(100); //timer for 7 SEGMENTS
+  setTimer3(100); //timer for LEDs
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
   HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, 0);
 
@@ -456,10 +456,10 @@ int main(void)
 //	    updateClockBuffer();
 //	    HAL_Delay(1000);
 
-	  //ex5_6_7_8();
-	  ex9();
-	  HAL_Delay(1);
-	  ex10();
+	  ex5_6_7_8();
+//	  ex9();
+//	  HAL_Delay(1);
+//	  ex10();
 //	    for (int row = 0; row < MAX_LED_MATRIX; row++) {
 //	        setRow(row);                     // Select the current row
 //	        setColumns(matrix_buffer[row]);  // Output the corresponding column data
@@ -481,7 +481,7 @@ int main(void)
 //            lastShiftTime = HAL_GetTick(); // Update the last shift time
 //        }
 
-        HAL_Delay(1);  // Small delay to allow for persistence of vision
+//        HAL_Delay(1);  // Small delay to allow for persistence of vision
 //	  displayLetterA();
 //	  if (timer1_flag == 1){
 //		  setTimer1(1);
