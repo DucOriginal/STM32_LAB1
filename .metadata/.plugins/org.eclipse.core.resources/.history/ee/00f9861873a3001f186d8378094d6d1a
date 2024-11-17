@@ -1,0 +1,33 @@
+/*
+ * global.h
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: Duc Original
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+#include "software_timer.h"
+#include "button.h"
+#include "led7_segment.h"
+#include "traffic_light.h"
+
+extern int status1;
+extern int status2;
+extern int status_manual;
+extern int mode1_flag;
+extern int mode2_flag;
+extern int idle_counter;
+
+#define INIT	1
+#define AUTO_RED 2
+#define AUTO_YEL 3
+#define AUTO_GRE 4
+
+#define MODE1 12
+#define MODE2 13
+#define MODE3 14
+#define MODE4 15
+
+#endif /* INC_GLOBAL_H_ */

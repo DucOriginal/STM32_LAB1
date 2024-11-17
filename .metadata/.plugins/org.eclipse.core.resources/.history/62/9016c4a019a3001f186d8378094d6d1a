@@ -1,0 +1,12 @@
+/*
+ * global.c
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: Duc Original
+ */
+
+#include "global.h"
+
+int status1 = 0;
+int status2 = 0;
+int mode1_flag = 0;

@@ -1,0 +1,121 @@
+/*
+ * fsm_setting.c
+ *
+ *  Created on: Nov 15, 2024
+ *      Author: Duc Original
+ */
+
+#include "fsm_setting.h"
+
+void fsm_setting_run()
+{
+	set7LED();
+	switch(status_manual)
+	{
+		case SETTING2:
+			if(isButton2Pressed() == 1)
+			{
+				idle_counter = 0;
+				setTimer3(50);
+				counter_7seg1++;
+				if(counter_7seg1 >= 99)
+				{
+					counter_7seg1 = 1;
+				}
+			}
+			counter_7seg2 = 2;
+			if(timer3_flag == 1)
+			{
+				blinkRED();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE3;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			if(isButton3Pressed() == 1)
+			{
+				counter_red = counter_7seg1;
+				//counter_7seg1 = 0;
+			}
+		case SETTING3:
+			if(isButton2Pressed() == 1)
+			{
+				idle_counter = 0;
+				setTimer3(50);
+				counter_7seg1++;
+				if(counter_7seg1 >= 99)
+				{
+					counter_7seg1 = 1;
+				}
+			}
+			counter_7seg2 = 3;
+			if(timer3_flag == 1)
+			{
+				blinkYEL();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE4;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			if(isButton3Pressed() == 1)
+			{
+				counter_yel = counter_7seg1;
+			}
+		case SETTING4:
+			if(isButton2Pressed() == 1)
+			{
+				idle_counter = 0;
+				setTimer3(50);
+				counter_7seg1++;
+				if(counter_7seg1 >= 99)
+				{
+					counter_7seg1 = 1;
+				}
+			}
+			counter_7seg2 = 4;
+			if(timer3_flag == 1)
+			{
+				blinkGRE();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton3Pressed() == 1)
+			{
+				counter_gre = counter_7seg1;
+			}
+
+	}
+
+}

@@ -1,0 +1,122 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: Duc Original
+ */
+
+#include "fsm_automatic.h"
+
+void fsm_automatic_run()
+{
+//	counter_7seg1--;
+	set7LED();
+	switch(status1){
+		case INIT:
+			initial1();
+			status1 = AUTO_RED;
+			counter_7seg1 = counter_red;
+			setTimer1(counter_red);
+			break;
+		case AUTO_RED:
+			setRED1();
+			//counter_7seg1 = counter_gre;
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_GRE;
+				setTimer1(counter_gre);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				mode1_flag++;
+			}
+			break;
+		case AUTO_YEL:
+			setYEL1();
+			if(timer1_flag == 1)
+			{
+
+				status1 = AUTO_RED;
+				//counter_7seg1 = counter_red;
+				setTimer1(counter_red);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				mode1_flag++;
+
+//				if(mode1_flag >= 2)
+//				{
+//					status2 = status1;
+//					status1 = MODE1;
+//				}
+			}
+			break;
+		case AUTO_GRE:
+			setGRE1();
+			if(timer1_flag == 1)
+			{
+
+				status1 = AUTO_YEL;
+				//counter_7seg1 = counter_yel;
+				setTimer1(counter_yel);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				mode1_flag++;
+
+//				if(mode1_flag >= 2)
+//				{
+//					status2 = status1;
+//					status1 = MODE1;
+//				}
+			}
+			break;
+		default:
+			break;
+
+	}
+//-------------------------------------------------
+	switch(status2){
+		case INIT:
+			initial2();
+			status2 = AUTO_GRE;
+			counter_7seg2 = counter_gre;
+			setTimer2(counter_gre);
+			break;
+		case AUTO_RED:
+			setRED2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_GRE;
+				setTimer2(counter_gre);
+			}
+			break;
+		case AUTO_YEL:
+			setYEL2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_RED;
+				setTimer2(counter_red);
+			}
+			break;
+		case AUTO_GRE:
+			setGRE2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_YEL;
+				setTimer2(counter_yel);
+			}
+			break;
+		default:
+			break;
+
+	}
+
+	if(mode1_flag ==2)
+	{
+		status1 = status2 = status_manual;
+		status_manual = MODE1;
+		setTimer1(0);
+		setTimer2(0);
+	}
+}

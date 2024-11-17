@@ -1,0 +1,11 @@
+traffic_light.c:12:6:initial1	8	static
+traffic_light.c:19:6:initial2	8	static
+traffic_light.c:26:6:setRED1	8	static
+traffic_light.c:32:6:setRED2	8	static
+traffic_light.c:38:6:setYEL1	8	static
+traffic_light.c:44:6:setYEL2	8	static
+traffic_light.c:50:6:setGRE1	8	static
+traffic_light.c:56:6:setGRE2	8	static
+traffic_light.c:63:6:blinkRED	8	static
+traffic_light.c:75:6:blinkYEL	8	static
+traffic_light.c:85:6:blinkGRE	8	static

@@ -1,0 +1,69 @@
+/*
+ * button.c
+ *
+ *  Created on: Nov 13, 2024
+ *      Author: Duc Original
+ */
+#include "button.h"
+#include "main.h"
+
+#define NO_OF_BUTTONS 3
+int keyReg0[NO_OF_BUTTONS];
+int keyReg1[NO_OF_BUTTONS];
+int keyReg2[NO_OF_BUTTONS];
+int keyReg3[NO_OF_BUTTONS];
+
+int TimerForKeyPress = 200;
+int flagProcess;
+
+void subKeyProcess1(){
+	HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+}
+
+void subKeyProcess2(){
+	HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+}
+
+void getKeyInput()
+{
+	for(int i = 0; i < NO_OF_BUTTONS; i++)
+	{
+		keyReg0[i] = keyReg1[i];
+		keyReg1[i] = keyReg2[i];
+		switch(i){
+			case 0:
+				keyReg2[0] = HAL_GPIO_ReadPin(Button1_GPIO_Port,Button1_Pin);
+			case 1:
+				keyReg2[1] = HAL_GPIO_ReadPin(Button2_GPIO_Port,Button2_Pin);
+			case 2:
+				keyReg2[2] = HAL_GPIO_ReadPin(Button3_GPIO_Port,Button3_Pin);
+		}
+		if((keyReg0[i] == keyReg1[i]) && (keyReg1[i] == keyReg2[i]))
+		{
+			if(keyReg3[i] != keyReg2[i])
+			{
+				keyReg3[i] = keyReg2[i];
+				if(keyReg2[i] == PRESSED_STATE)
+				{
+					switch(i)
+					{
+						case 0: subKeyProcess1();
+						case 1: subKeyProcess2();
+						case 2: subKeyProcess3();
+					}
+					TimerForKeyPress = 200;
+				}
+			}
+			else{
+				TimerForKeyPress--;
+				if(TimerForKeyPress == 0)
+				{
+					keyReg3[i] = NORMAL_STATE;
+				}
+			}
+
+		}
+
+	}
+}
+

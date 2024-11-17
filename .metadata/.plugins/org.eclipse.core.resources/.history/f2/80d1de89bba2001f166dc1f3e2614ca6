@@ -1,0 +1,84 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: Duc Original
+ */
+
+#include "fsm_automatic.h"
+
+void fsm_automatic_run()
+{
+	set7LED();
+	switch(status1){
+		case INIT:
+			initial1();
+			status1 = AUTO_RED;
+			counter_7seg1 = counter_red;
+			setTimer1(counter_red);
+			break;
+		case AUTO_RED:
+			setRED1();
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_GRE;
+				counter_7seg1 = counter_gre;
+				setTimer1(counter_gre);
+			}
+			break;
+		case AUTO_YEL:
+			setYEL1();
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_RED;
+				setTimer1(counter_red);
+			}
+			break;
+		case AUTO_GRE:
+			setGRE1();
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_YEL;
+				setTimer1(counter_yel);
+			}
+			break;
+		default:
+			break;
+
+	}
+
+	switch(status2){
+		case INIT:
+			initial2();
+			status2 = AUTO_GRE;
+			setTimer2(counter_gre);
+			break;
+		case AUTO_RED:
+			setRED2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_GRE;
+				setTimer2(counter_gre);
+			}
+			break;
+		case AUTO_YEL:
+			setYEL2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_RED;
+				setTimer2(counter_red);
+			}
+			break;
+		case AUTO_GRE:
+			setGRE2();
+			if(timer2_flag == 1)
+			{
+				status2 = AUTO_YEL;
+				setTimer2(counter_yel);
+			}
+			break;
+		default:
+			break;
+
+	}
+}

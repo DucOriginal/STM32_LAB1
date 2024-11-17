@@ -1,0 +1,98 @@
+/*
+ * software_timer.c
+ *
+ *  Created on: Oct 6, 2024
+ *      Author: Duc Original
+ */
+
+
+#include "software_timer.h"
+#include "led7_segment.h"
+
+int timer1_counter = 0;
+int timer1_flag = 0;
+int timer2_counter = 0;
+int timer2_flag = 0;
+int timer3_counter = 0;
+int timer3_flag = 0;
+
+int segment1_flag = 0;
+int segment2_flag = 0;
+int segment1_counter = 0;
+int segment2_counter = 0;
+
+int counter_red = 5;
+int counter_yel = 2;
+int counter_gre = 3;
+
+int counter_7seg1 = counter_red;
+int counter_7seg2 = counter_green;
+
+void setTimer1(int duration)
+{
+	timer1_counter = duration * 100;
+	timer1_flag = 0;
+}
+
+void setTimer2(int duration)
+{
+	timer2_counter = duration * 100;
+	timer2_flag = 0;
+}
+
+void setTimer3(int duration)
+{
+	timer3_counter = duration * 100;
+	timer3_flag = 0;
+}
+
+void setTimer7segment1(int duration)
+{
+	segment1_counter = duration;
+	segment1_flag = 0;
+}
+void setTimer7segment2(int duration)
+{
+	segment2_counter = duration;
+	segment2_flag = 0;
+}
+
+void timerRun()
+{
+	if(timer1_counter > 0)
+	{
+		timer1_counter --;
+		counter_7seg1--;
+		if(timer1_counter <= 0)
+			timer1_flag = 1;
+	}
+
+	if(timer2_counter > 0)
+	{
+		timer2_counter --;
+		if(timer2_counter <= 0)
+			timer2_flag = 1;
+	}
+
+	if(timer3_counter > 0)
+	{
+		timer3_counter --;
+		if(timer3_counter <= 0)
+			timer3_flag = 1;
+	}
+
+	if(segment1_counter > 0)
+	{
+		segment1_counter --;
+		if(segment1_counter <= 0)
+			segment1_flag = 1;
+	}
+
+	if(segment2_counter > 0)
+	{
+		segment2_counter --;
+		if(segment2_counter <= 0)
+			segment2_flag = 1;
+	}
+}
+

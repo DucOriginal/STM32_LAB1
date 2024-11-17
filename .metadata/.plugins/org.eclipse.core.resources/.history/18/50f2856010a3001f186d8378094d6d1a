@@ -1,0 +1,73 @@
+/*
+ * fsm_manual.c
+ *
+ *  Created on: Nov 15, 2024
+ *      Author: Duc Original
+ */
+
+
+#include "fsm_manual.h"
+
+void fsm_manual_run()
+{
+	set7LED();
+	switch(status1)
+	{
+		case MODE1:
+			if(mode1_flag == 2)
+			{
+				status1 = MODE2;
+				mode1_flag = 0;
+				setTimer3(50);
+			}
+			break;
+		case MODE2:
+			counter_7seg1 = 0;
+			if(timer3_flag == 1)
+			{
+				blinkRED();
+				setTimer3(50);
+			}
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_RED;
+				setTimer1(5);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = MODE3;
+				setTimer1(10);
+			}
+			break;
+		case MODE3:
+			blinkYEL();
+			counter_7seg1 = 0;
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_YEL;
+				setTimer1(2);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = MODE4;
+				setTimer1(10);
+			}
+			break;
+		case MODE4:
+			blinkGRE();
+			counter_7seg1 = 0;
+			if(timer1_flag == 1)
+			{
+				status1 = AUTO_GRE;
+				setTimer1(3);
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = MODE1;
+				setTimer1(10);
+			}
+			break;
+		default:
+			break;
+	}
+}

@@ -1,0 +1,12 @@
+software_timer.c:35:6:setTimer1	16	static
+software_timer.c:41:6:setTimer2	16	static
+software_timer.c:47:6:setTimer3	16	static
+software_timer.c:53:6:setTimer7segment1	16	static
+software_timer.c:58:6:setTimer7segment2	16	static
+software_timer.c:65:6:setTimerLedRed	16	static
+software_timer.c:71:6:setTimerLedYel	16	static
+software_timer.c:77:6:setTimerLedGre	16	static
+software_timer.c:83:6:TurnOnRed	8	static
+software_timer.c:90:6:TurnOnYel	8	static
+software_timer.c:97:6:TurnOnGre	8	static
+software_timer.c:104:6:timerRun	4	static

@@ -1,0 +1,123 @@
+/*
+ * fsm_manual.c
+ *
+ *  Created on: Nov 15, 2024
+ *      Author: Duc Original
+ */
+
+
+#include "fsm_manual.h"
+
+
+void fsm_manual_run()
+{
+	set7LED();
+	switch(status_manual)
+	{
+		case MODE1:
+
+				status_manual = MODE2;
+				mode1_flag = 0;
+				//mode2_flag = 0;
+				setTimer3(50);
+				//idle_counter++;
+
+			break;
+		case MODE2:
+			counter_7seg1 = 0;
+			counter_7seg2 = 2;
+			if(timer3_flag == 1)
+			{
+				blinkRED();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE3;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			if(isButton2Pressed() == 1)
+			{
+				counter_7seg1 = 1;
+				status_manual = SETTING2;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			break;
+		case MODE3:
+			counter_7seg1 = 0;
+			counter_7seg2 = 3;
+			if(timer3_flag == 1)
+			{
+				blinkYEL();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE4;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			if(isButton2Pressed() == 1)
+			{
+				counter_7seg1 = 1;
+				status_manual = SETTING3;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			break;
+		case MODE4:
+			counter_7seg1 = 0;
+			counter_7seg2 = 4;
+			if(timer3_flag == 1)
+			{
+				blinkGRE();
+				idle_counter++;
+				setTimer3(50);
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+				//setTimer1();
+			}
+			if(isButton2Pressed() == 1)
+			{
+				counter_7seg1 = 1;
+				status_manual = SETTING4;
+				idle_counter = 0;
+				setTimer3(50);
+			}
+			break;
+		default:
+			break;
+	}
+
+
+
+
+
+
+}

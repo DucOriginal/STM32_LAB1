@@ -1,0 +1,166 @@
+/*
+ * fsm_manual.c
+ *
+ *  Created on: Nov 15, 2024
+ *      Author: Duc Original
+ */
+
+
+#include "fsm_manual.h"
+
+void fsm_manual_run()
+{
+	set7LED();
+	switch(status_manual)
+	{
+		case MODE1:
+
+				status_manual = MODE2;
+				mode1_flag = 1;
+				first_press = 0;
+				TurnOnRed();
+
+			break;
+		case MODE2:
+			counter_7seg1 = first_press;
+			counter_7seg2 = 2;
+			btn = MODE2;
+			if(timerLedRed_flag == 1)
+			{
+				blinkRED();
+				idle_counter++;
+				TurnOnRed();
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+				mode1_flag = 1;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE3;
+				first_press = 0;
+				idle_counter = 0;
+				TurnOnYel();
+			}
+			if(isButton2Pressed() == 1)
+			{
+				btn = MODE2;
+				if(first_press == 0)
+				{
+					counter_7seg1 = 1;
+				}
+				else
+					counter_7seg1++;
+
+				counter_7seg2 = 2;
+				status_manual = MODE2;
+
+				idle_counter = 0;
+				TurnOnRed();
+				if(counter_7seg1 >= 99)
+				{
+					counter_7seg1 = 1;
+				}
+			}
+//			if(isButton2Pressed() == 1)
+//			{
+//				btn = SETTING2;
+//				idle_counter = 0;
+//				counter_7seg2 = 2;
+//				status_manual = SETTING2;
+//				TurnOnRed();
+//				isButton1Pressed();
+//				isButton3Pressed();
+//				counter_7seg1++;
+//				if(counter_7seg1 >= 99)
+//				{
+//					counter_7seg1 = 1;
+//				}
+//			}
+			if(isButton3Pressed() == 1)
+			{
+				counter_red = counter_7seg1;
+			}
+			break;
+		case MODE3:
+			counter_7seg1 = 0;
+			counter_7seg2 = 3;
+			btn = MODE3;
+			if(timerLedYel_flag == 1)
+			{
+				blinkYEL();
+				idle_counter++;
+				TurnOnYel();
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+				mode1_flag =1;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status_manual = MODE4;
+				idle_counter = 0;
+				TurnOnGre();
+			}
+			if(isButton2Pressed() == 1)
+			{
+				counter_7seg1 = 1;
+				counter_7seg2 = 3;
+				status_manual = SETTING3;
+				isButton1Pressed();
+				isButton3Pressed();
+				idle_counter = 0;
+				TurnOnYel();
+			}
+			break;
+		case MODE4:
+			counter_7seg1 = 0;
+			counter_7seg2 = 4;
+			btn = MODE4;
+			if(timerLedGre_flag == 1)
+			{
+				blinkGRE();
+				idle_counter++;
+				TurnOnGre();
+			}
+			if(idle_counter >= 20)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+				mode1_flag = 1;
+			}
+			if(isButton1Pressed() == 1)
+			{
+				status1 = INIT;
+				status2 = INIT;
+				idle_counter = 0;
+				mode1_flag = 1;
+			}
+			if(isButton2Pressed() == 1)
+			{
+				counter_7seg1 = 1;
+				counter_7seg2 = 4;
+				status_manual = SETTING4;
+				isButton1Pressed();
+				isButton3Pressed();
+				idle_counter = 0;
+				TurnOnGre();
+			}
+			break;
+		default:
+			break;
+	}
+
+
+
+
+
+
+}

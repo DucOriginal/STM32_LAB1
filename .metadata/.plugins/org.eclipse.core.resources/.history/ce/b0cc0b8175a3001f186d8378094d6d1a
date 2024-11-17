@@ -1,0 +1,22 @@
+/*
+ * fsm_setting.c
+ *
+ *  Created on: Nov 15, 2024
+ *      Author: Duc Original
+ */
+
+#include "fsm_setting.h"
+
+void fsm_setting_run()
+{
+	set7LED();
+	if(isButton2Pressed() == 1)
+	{
+		counter_7seg1++;
+		if(counter_7seg1 >= 99)
+		{
+			counter_7seg1 = 1;
+		}
+	}
+
+}

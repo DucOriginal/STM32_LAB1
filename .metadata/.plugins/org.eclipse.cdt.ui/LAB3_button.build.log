@@ -1,0 +1,24 @@
+17:39:29 **** Incremental Build of configuration Debug for project LAB3_button ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/fsm_automatic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_automatic.d" -MT"Core/Src/fsm_automatic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_automatic.o"
+arm-none-eabi-gcc "../Core/Src/fsm_manual.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_manual.d" -MT"Core/Src/fsm_manual.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_manual.o"
+arm-none-eabi-gcc -o "LAB3_button.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\VXL_241\STM32_LAB1\LAB3_button\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB3_button.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB3_button.elf
+ 
+arm-none-eabi-size   LAB3_button.elf 
+arm-none-eabi-objdump -h -S  LAB3_button.elf  > "LAB3_button.list"
+arm-none-eabi-objcopy  -O ihex  LAB3_button.elf  "LAB3_button.hex"
+arm-none-eabi-objcopy  -O binary  LAB3_button.elf  "LAB3_button.bin"
+   text	   data	    bss	    dec	    hex	filename
+  11728	    156	   1804	  13688	   3578	LAB3_button.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB3_button.hex
+Finished building: LAB3_button.bin
+ 
+ 
+Finished building: LAB3_button.list
+ 
+
+17:39:31 Build Finished. 0 errors, 0 warnings. (took 2s.260ms)
+
